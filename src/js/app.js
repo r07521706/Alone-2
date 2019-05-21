@@ -58,7 +58,13 @@ App = {
     //closeInfo
     $(document).on('click', '.btn-closeInfo', App.closeInfo);
 
+    $(document).on('click', '.btn-buy', App.buyChicken);
 
+
+  },
+
+  buyChicken:function(){
+    alert("buy");
   },
 
   popSellerInfo:function(){
@@ -115,11 +121,11 @@ App = {
       chikenStore = instance;
       return chikenStore.getChickenInformation(num);
     }).then(function(result) {
-
+          // alert(result[3]);
           console.log(result);
           var chickensRow = $('#chickensRow');
           var chickenTemplate = $('#chickenTemplate');
-
+          chickenTemplate.find('.img-src').attr("src",result[3]);
           chickenTemplate.find('.panel-title').text(result[2]);
           chickenTemplate.find('.chicken-service').text(result[4]);
           chickenTemplate.find('.chicken-price').text(result[5].toString(10));
