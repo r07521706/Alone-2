@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Alone</title>
+
+    <!-- Bootstrap -->
+
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/index.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <!-- <a href="launch.html" target="_blank">上架</a> -->
+
+    <header>
+      <div class="container">
+        <nav>
+          <h1 class="brand"><a href="index.html">AL<span>O</span>NE</a></h1>
+          <ul>
+            <li><a href="#">message</a></li>
+            <li><a href="/launch.html" target="_blank">launch</a></li>
+            <li><a href="#" onclick="App.accountContent()">account</a></li>
+          </ul>
+
+        </nav>
+      </div>
+    </header>
+
+    <hr style="color:white;">
+    <div class="account-container" >
+
+      <p id="account" style="color:white;float:right;display:inline;margin-right:90px;">your address &nbsp</p>
+      <p style="color:white;float:right;display:inline;">your account : &nbsp &nbsp &nbsp</p>
+    </div>
+<!-- ------------------------------------- -->
+
+    <div class="container">
+
+      <div class="row">
+        <div class="col-xs-12 col-sm-8 col-sm-push-2">
+
+          <!-- <hr/> -->
+          <br/>
+        </div>
+      </div>
+      <!-- <a href="t1/t1.html">上架</a> -->
+      <div id="chickensRow" class="row">
+        <!-- PETS LOAD HERE -->
+      </div>
+    </div>
+
+
+
+    <!-- each chicken's template -->
+    <div id="chickenTemplate" style="display: none;">
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="panel panel-default panel-pet">
+          <div class="panel-heading">
+            <h3 class="panel-title">Scrappy</h3>
+          </div>
+          <div class="panel-body">
+            <img alt="140x140" data-src="holder.js/140x140" class="img-rounded img-center" style="width: 100%;" src="https://animalso.com/wp-content/uploads/2017/01/Golden-Retriever_6.jpg" data-holder-rendered="true">
+            <br/><br/>
+
+            <strong>Service</strong>: <span class="chicken-service">3</span><br/>
+            <strong>Price</strong>: <span class="chicken-price">Warren, MI</span><br/>
+            <strong>Address</strong>: <span class="chicken-address" style="font-size:5px;">3</span><br/>
+            <button class="btn btn-default btn-popInfo" type="button">Buy</button>
+            <!-- <INPUT class="btn btn-default btn-adopt" name="pclog" type="button" value="Buy" > -->
+            <button class="btn btn-default btn-beforeMsg" type="button" data-id="0">Message</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- chickenTemplate end -->
+
+    <div class="container" style="color:white;clear:both;display:none;">
+      <p id="temp-true">try</p>
+      <p id="temp-address">try</p>
+      <p id="temp-name">try</p>
+      <p id="temp-link">try</p>
+      <p id="temp-service">try</p>
+      <p id="temp-price">try</p>
+
+    </div>
+
+
+    <div id="dialog_div" title="視窗的標題" style="position:fixed;top:150px;right:600px;background-color:white;width:300px;height:400px;border:solid;display:none;">
+
+
+      <div class="Chicken-content">
+
+      </div>
+
+      <div class="operate" style="margin-top:360px;float:right;">
+        <button class="btn " type="button" data-id="0">BUY</button>
+        <button class="btn  btn-closeInfo" type="button" data-id="0">CLOSE</button>
+      </div>
+
+
+    </div>
+
+    <div id="account_div"  style="position:fixed;top:150px;right:600px;background-color:white;width:300px;height:150px;border:#666666 solid;display:none;font-size:1.5em;">
+
+      <strong>Buy-Information</strong>: <span ></span><br/>
+      <strong>&nbsp&nbsp </strong> <span class="account-sell"></span><br/>
+      <strong>Sell-Information</strong>: <span ></span><br/>
+      <strong>&nbsp&nbsp </strong><span class="account-buy"></span><br/>
+      <div class="operate" style="margin-top:-15px;float:right;">
+        <!-- <button class="btn " type="button" data-id="0">BUY</button> -->
+        <button style="margin-bottom:10px;"class="btn  " type="button" data-id="0" onclick="">RECIVE</button>
+        <button style="margin-bottom:10px;"class="btn" type="button"  onclick="App.cAI()">CLOSE</button>
+
+      </div>
+
+
+    </div>
+
+<!-- <button class="btn2" type="sumit" name="button">查詢</button> -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/web3.min.js"></script>
+    <script src="js/truffle-contract.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
