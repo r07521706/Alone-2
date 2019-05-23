@@ -44,33 +44,34 @@ App = {
   },
 
   bindEvents: function() {
-    $(document).on('click', '.btn', App.addChicken);
+    // $(document).on('click', '.btn-launch', App.addChicken);
+    $(".btn-launch").click(App.addChicken);
   },
 
   addChicken: function(event) {
     event.preventDefault();
-
+    //get_data
     var name=$("#name").val();
-
     var image=$("#image").val();
     var service=$("#service").val();
     var price=$("#price").val();
+    var travelFare=$("#travelFare").val();
 
+    //call soldity function
     var chickenStore;
     web3.eth.getAccounts(function(error, accounts) {
       if (error) {
         console.log(error);
       }
-
       var account = accounts[0];
-
       App.contracts.ChickenStore.deployed().then(function(instance) {
         chikenStore = instance;
-
-        return chikenStore.launch(name,image,service,price,{form:account});
+        console.log("addChicken");
+        console.log(account);
+        return chikenStore.launch(name,image,service,price,travelFare,{from:account});
       }).then(function(result) {
         console.log(result);
-        return chikenStore.getChickenInformation(1);
+        return console.log(chikenStore.getChickenInformation(1));
       }).then(function(result) {
         console.log(result);
         return (result);

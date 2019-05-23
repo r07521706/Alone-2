@@ -13,7 +13,6 @@ App = {
     if (window.ethereum) {
       App.web3Provider = window.ethereum;
       try {
-
         // Request account access
         await window.ethereum.enable();
       } catch (error) {
@@ -38,12 +37,10 @@ App = {
       // Get the necessary contract artifact file and instantiate it with truffle-contract
       var ChickenStoreArtifact = data;
       App.contracts.ChickenStore = TruffleContract(ChickenStoreArtifact);
-
       // Set the provider for our contract
       App.contracts.ChickenStore.setProvider(App.web3Provider);
 
       // Use our contract to retrieve and mark the adopted pets
-      //return App.transactionOfChicken();
     });
 
     return App.bindEvents();
@@ -53,15 +50,73 @@ App = {
   bindEvents: function() {
     $("#account").html(web3.eth.accounts[0]);
     App.getEachChicken();
-    //popInfo
-    // $(document).on('click', '.btn-popInfo', App.popSellerInfo);
-    //closeInfo
+
     $(document).on('click', '.btn-closeInfo', App.closeInfo);
     $(document).on('click', '.btn-account-reject', App.AccountReject);
     $(document).on('click', '.btn-account-accept', App.AccountConfirm);
+    $(document).on('click', '.btn-account-evaluate', App.AccountEvaluate);
+    $(document).on('click', '.btn-account-lookup', App.AccountLookUp);
     App.getBuyInfo();
 
 
+  },
+
+  AccountLookUp:function(){
+    event.preventDefault();
+
+    var address=$("#show-evaluate-address").val();
+    var chickenStore;
+    web3.eth.getAccounts(function(error, accounts) {
+      if (error) {
+        console.log(error);
+      }
+
+      var account = accounts[0];
+
+      App.contracts.ChickenStore.deployed().then(function(instance) {
+        chikenStore = instance;
+        // alert(address);
+        return chikenStore.showEvaluation(address);
+      }).then(function(result) {
+        alert(result);
+        return chikenStore.getChickenInformation(1);
+      }).then(function(result) {
+        console.log(result);
+        return (result);
+      }).catch(function(err) {
+        console.log(err.message);
+      });
+    });
+
+  },
+
+  AccountEvaluate:function(){
+    event.preventDefault();
+
+    var address=$("#evaluate-address").val();
+    var star=$("#evaluate-star").val();
+
+    var chickenStore;
+    web3.eth.getAccounts(function(error, accounts) {
+      if (error) {
+        console.log(error);
+      }
+
+      var account = accounts[0];
+
+      App.contracts.ChickenStore.deployed().then(function(instance) {
+        chikenStore = instance;
+        return chikenStore.evaluate(address,star);
+      }).then(function(result) {
+        console.log(result);
+        return chikenStore.getChickenInformation(1);
+      }).then(function(result) {
+        console.log(result);
+        return (result);
+      }).catch(function(err) {
+        console.log(err.message);
+      });
+    });
 
   },
 
@@ -73,7 +128,7 @@ App = {
   },
 
   popSellerInfo:function(event){
-    // $("#dialog_div").css("display","inline");
+
     var x=$(event).parent().children('.chicken-address')[0]
     var y=$(event).parent().children('.chicken-price')[0]
 
@@ -90,9 +145,10 @@ App = {
     var account = accounts[0];
     App.contracts.ChickenStore.deployed().then(function(instance) {
       chickenStore = instance;
+      console.log(account);
       return chickenStore.buyChicken(address,{from:account, value:amountToSend});
     }).then(function(result) {
-          //var send = web3.eth.sendTransaction({from:web3.eth.accounts[0],to:address, value:amountToSend});
+
           console.log(result);
 
       return (result);
@@ -105,7 +161,6 @@ App = {
   },
 
   getBuyInfo:function(){
-    // $("#dialog_div").css("display","inline");
     var x=$(event).parent().children('.chicken-address')[0]
     var y=$(event).parent().children('.chicken-price')[0]
 
@@ -124,8 +179,6 @@ App = {
       chickenStore = instance;
       return chickenStore.getRequest();
     }).then(function(result) {
-          //var send = web3.eth.sendTransaction({from:web3.eth.accounts[0],to:address, value:amountToSend});
-          // alert(address);
           console.log(result);
           $("#account-buyer").text(result);
 
@@ -139,21 +192,12 @@ App = {
 
 
   },
-  closeInfo:function(){
-    $("#dialog_div").css("display","none");
-  },
-  accountContent:function(){
-    $("#account_div").css("display","inline");
-  },
-
-  cAI:function(){
-    $("#account_div").css("display","none");
-  },
 
   getEachChicken:function(){
 
     var chickenStore;
     web3.eth.getAccounts(function(error, accounts) {
+
       if (error) {
         console.log(error);
       }
@@ -167,13 +211,11 @@ App = {
           for(i=1;i<=result;i++){
             App.getChickenByNumber(i)
           }
-        }
+         }
 
-      ).catch(function(err) {
-        console.log(err.message);
-      });
-
-
+            ).catch(function(err) {
+              console.log(err.message);
+              });
     });
 
   },
@@ -181,16 +223,19 @@ App = {
   getChickenByNumber:function(num){
 
     var chickenStore;
+
     web3.eth.getAccounts(function(error, accounts) {
     if (error) {
       console.log(error);
     }
+
     var account = accounts[0];
+
     App.contracts.ChickenStore.deployed().then(function(instance) {
       chikenStore = instance;
       return chikenStore.getChickenInformation(num);
     }).then(function(result) {
-          // alert(result[3]);
+
           console.log(result);
           var chickensRow = $('#chickensRow');
           var chickenTemplate = $('#chickenTemplate');
@@ -200,15 +245,16 @@ App = {
           chickenTemplate.find('.chicken-price').text(result[5].toString(10));
           chickenTemplate.find('.chicken-address').text(result[1]);
           chickenTemplate.find('.chicken-tradable').text(result[0]);
+          chickenTemplate.find('.chicken-travelFare').text(result[6]);
           chickensRow.append(chickenTemplate.html());
           chickenResult=result;
 
-      return (result);
-    }).catch(function(err) {
-      console.log(err.message);
+          return (result);
+      }).catch(function(err) {
+            console.log(err.message);
+         });
     });
-  });
-},
+  },
 
   AccountReject: function(event) {
     event.preventDefault();
@@ -255,7 +301,6 @@ App = {
 
       App.contracts.ChickenStore.deployed().then(function(instance) {
         chikenStore = instance;
-        // alert(address);
         return chikenStore.transactionSuccess(address);
       }).then(function(result) {
         console.log(result);
